@@ -3,13 +3,15 @@ from django.db import models
 from django.db.models import Count
 
 from core.choices import Sexo, UnidadeFederativa
+from users.models import User
 
 class Tutor(models.Model):
     id = models.UUIDField(
         primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
     )
+    user = models.OneToOneField(User, db_index=True, on_delete=models.PROTECT)
     nome = models.CharField(max_length=100)
-    celuar = models.CharField(max_length=14, null=True, blank=True)
+    celular = models.CharField(max_length=14, null=True, blank=True)
     cpf = models.CharField(max_length=14, null=True, blank=True)
     rg = models.CharField(max_length=14, null=True, blank=True)
     rua = models.CharField(max_length=14, null=True, blank=True)
@@ -82,3 +84,14 @@ class Pet(models.Model):
     
     class Meta:
         db_table = 'pet'
+
+
+class Veterinario(models.Model):
+    id = models.UUIDField(
+        primary_key=True, unique=True, db_index=True, default=uuid.uuid4, editable=False
+    )
+    user = models.OneToOneField(User, db_index=True, on_delete=models.PROTECT)
+    nome = models.CharField(max_length=100)
+    clinica = models.CharField(max_length=100)
+    celular = models.CharField(max_length=14, null=True, blank=True)
+
